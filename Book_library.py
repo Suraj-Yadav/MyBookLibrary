@@ -19,14 +19,14 @@ class BooksManager(object):
 		#self.book_list.append(
 			#{
 			#	"title": "ALC Title",
-			#	"auther": "sar",
+			#	"author": "sar",
 			#	"copies" : 5,
 			#}
 		#)
 		#self.book_list.append(
 			#{
 			#	"title": "CAO Title",
-			#	"auther": "sim",
+			#	"author": "sim",
 			#	"copies" : 0,
 			#}
 		#) 
@@ -36,13 +36,14 @@ class BooksManager(object):
 		return self.book_list
 
 	# This method used to add books to the book library
-	def add_book(self, title, auther, count):
+	def add_book(self, title, author, count, shelf):
 		#code to add book
 		self.book_list.append(
 			{
 				"title": title,
-				"auther": auther,
+				"author": author,
 				"copies" : count,
+				"shelf": shelf
 			}
 		)
 
@@ -57,9 +58,9 @@ class BooksManager(object):
 		return [item for item in self.book_list if item["copies"] > 0]
 
 	# This method removes a given count of a given book from book library
-	def delete_book(self,title,auther,delete_count):
+	def delete_book(self,title,author,delete_count):
 		for item in self.book_list:
-			if item["title"] == title and item["auther"] == auther:
+			if item["title"] == title and item["author"] == author:
 				if item["copies"] > 0 and item["copies"] >= delete_count:
 					item["copies"] = item["copies"] - delete_count
 				elif item["copies"] > 0 and item["copies"] < delete_count:
@@ -80,10 +81,16 @@ class BooksManager(object):
 
 	
 	# Check if a requested book is available in the book library 
-	def is_available(self,title,auther):
+	def is_available(self,title,author):
 		for item in self.book_list:
-			if item["title"] == title and item["auther"] == auther:
+			if item["title"] == title and item["author"] == author:
 				if item["copies"] > 0:
 					return "Yes"
 		return "No"
-					 	
+	
+	def getShelf(self, title, author):
+		for item in self.book_list:
+			if item["title"] == title and item["author"] == author:
+				if item["copies"] > 0:
+					return item["shelf"]
+		return ""
